@@ -1,106 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 2px solid #eee;
-        }
-
-        .cart-header h1 {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .cart-table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        .cart-table th,
-        .cart-table td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        .cart-table th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-        }
-
-        .cart-table img {
-            width: 70px;
-            border-radius: 5px;
-        }
-
-        .cart-actions {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-actions .total {
-            font-size: 18px;
-            color: #333;
-        }
-
-        .cart-actions button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .cart-actions button:hover {
-            background-color: #0056b3;
-        }
-
-        .empty-cart {
-            text-align: center;
-            padding: 50px 0;
-            color: #999;
-        }
-    </style>
 </head>
-
-<body>
-    <div class="container">
+<body class="cart_body">
+    <div class="cart_container">
         <div class="cart-header">
             <h1>Your Shopping Cart</h1>
             <a href="index.html" style="text-decoration: none; color: #007bff;">Continue Shopping</a>
         </div>
-    
+
         <table class="cart-table" id="cart-items">
             <thead>
                 <tr>
@@ -112,22 +25,81 @@
                     <th>Remove</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Dynamic content will be inserted here -->
+            <tbody id="cart-table-body">
+                <!-- Cart items will be dynamically inserted here -->
             </tbody>
         </table>
-    
-        <div class="total">Total: $0.00</div>
 
-    
-        <!-- for an empty cart -->
-        <div class="empty-cart">
+        <div class="cart-actions">
+            <div class="total" id="cart-total">Total: $0.00</div>
+            <button id="checkout-button">Checkout</button>
+        </div>
+
+        <div class="empty-cart" id="empty-cart">
             <h2>Your cart is empty!</h2>
             <p>Start adding items to your cart now.</p>
         </div>
     </div>
-    
-    <script src="/assets/js/script.js"></script>
 
+    <script>
+        // Retrieve cart data from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCart() {
+            const cartTableBody = document.getElementById('cart-table-body');
+            const cartTotal = document.getElementById('cart-total');
+            const emptyCartMessage = document.getElementById('empty-cart');
+
+            cartTableBody.innerHTML = ''; // Clear previous cart items
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                const totalItemPrice = item.price * item.quantity;
+                totalPrice += totalItemPrice;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${item.image}" alt="${item.name}"></td>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td><input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)"></td>
+                    <td>$${totalItemPrice.toFixed(2)}</td>
+                    <td><button onclick="removeFromCart(${index})">Remove</button></td>
+                `;
+                cartTableBody.appendChild(row);
+            });
+
+            // Update the total
+            cartTotal.textContent = `Total: $${totalPrice.toFixed(2)}`;
+
+            // Show or hide the empty cart message
+            if (cart.length > 0) {
+                emptyCartMessage.style.display = 'none';
+            } else {
+                emptyCartMessage.style.display = 'block';
+            }
+        }
+
+        // Update quantity in the cart
+        function updateQuantity(index, quantity) {
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            cart[index].quantity = quantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Initial cart update
+        updateCart();
+    </script>
 </body>
 </html>
+

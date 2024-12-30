@@ -1,150 +1,90 @@
-// adding products on click of add_to_cart button 
-
-// let num = 0;
-// document.querySelector(".cartItems").style.display = "none";
-
-// document.querySelectorAll(".add_to_cart").forEach(function (button) {
-//     button.addEventListener("click", function (event) {
-//         // Prevent event propagation to parent elements
-//         event.stopPropagation();
-
-//         // Display the cart
-//         document.querySelector(".cartItems").style.display = "block";
-
-//         // Increment the cart count
-//         num++;
-//         document.querySelector("#cartNum").innerHTML = num;
-
-//         // Get the parent card element
-//         let card = button.closest(".card");
-
-//         // Create and append the cart item
-//         let div = document.createElement("div");
-//         div.classList.add("cartList");
-
-//         div.innerHTML = `
-//             <i class="fa fa-times cross" onclick="remove(this)" aria-hidden="true"></i>
-//             <img src="${card.querySelector("img").src}" alt="Product Image">
-//             <p>$2345</p>
-//         `;
-//         document.querySelector(".cartItems").appendChild(div);
-//     });
-// });
-
-// // To remove cart items
-// function remove(element) {
-//     // Decrement the cart count
-//     num--;
-//     document.querySelector("#cartNum").innerHTML = num;
-
-//     // Remove the cart item
-//     element.closest(".cartList").remove();
-
-//     // Hide the cart if no items are left
-//     if (num === 0) {
-//         document.querySelector(".cartItems").style.display = "none";
-//     }
-// }
 
 
 
-let num = 0;
-let totalPrice = 0; // Variable to track the total price of items in the cart
-document.querySelector(".cartItems").style.display = "none";
-// Listen for the "Add to Cart" button click event in the modal
-document.querySelectorAll(".add_to_cart").forEach(function (button) {
-  button.addEventListener("click", function (event) {
-      // Prevent event propagation to parent elements
-      event.stopPropagation();
-      
-      // Increment the cart count
-      num++;
-      document.querySelector("#cartNum").innerHTML = num;
+const addToCartButtons = document.querySelectorAll('.add_to_cart');
 
-      // Get the product details from the modal
-      let modal = document.querySelector("#product-detail-modal");
-      let productName = modal.querySelector("#product-name").innerText;
-      let productPrice = parseFloat(modal.querySelector("#product-price").innerText.replace('Price: $', ''));
-      let productImage = modal.querySelector("#product-image").src;
-      if (productName && productPrice) {
-          // Create a new row for the cart table
-          let row = document.createElement("tr");
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        const productElement = event.target.closest('.card');
+        const productId = productElement.dataset.productId;
+        const productName = productElement.dataset.productName;
+        const productPrice = parseFloat(productElement.dataset.productPrice);
+        const productImage = productElement.dataset.productImage;
 
-          // Set the row content
-          row.innerHTML = `
-              <td><img src="${productImage}" alt="Product Image" style="width: 50px; height: 50px;"></td>
-              <td>${productName}</td>
-              <td>$${productPrice.toFixed(2)}</td>
-              <td>
-                  <input type="number" value="1" min="1" class="quantity" onchange="updateTotal()">
-              </td>
-              <td class="item-total">$${productPrice.toFixed(2)}</td>
-              <td><i class="fa fa-times cross" onclick="remove(this)" aria-hidden="true"></i></td>
-          `;
+        const product = {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            image: productImage,
+            quantity: 1
+        };
 
-          // Ensure #cart-items exists before appending the row
-          let cartItems = document.querySelector("#cart-items");
-          if (cartItems) {
-              cartItems.appendChild(row);
-          } else {
-              console.error("#cart-items element not found.");
-          }
+        // Get the current cart or create an empty array if none exists
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-          // Update the total price
-          totalPrice += productPrice;
-          document.querySelector(".total").innerHTML = "Total: $" + totalPrice.toFixed(2);
-      } else {
-          console.error("Product name or price not found.");
-      }
+        // Check if the product is already in the cart
+        const existingProductIndex = cart.findIndex(item => item.id === productId);
+        if (existingProductIndex !== -1) {
+            // If the product is already in the cart, increase its quantity
+            cart[existingProductIndex].quantity += 1;
+        } else {
+            // If the product is not in the cart, add it
+            cart.push(product);
+        }
 
-      // Close the modal after adding the product to the cart
-      modal.style.display = 'none';
-  });
+        // Save updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Display the popup message
+        alert('Product added to the cart');
+        // showPopup('Product added to the cart');
+
+        // Update the cart count dynamically
+        updateCartCount();
+    });
 });
 
-// To remove cart items
-function remove(element) {
-    let row = element.closest("tr");
-    let price = parseFloat(row.querySelector(".item-total").innerText.replace('$', ''));
-    
-    // Decrement the cart count
-    num--;
-    document.querySelector("#cartNum").innerHTML = num;
+// Function to update the cart count displayed in the HTML
+function updateCartCount() {
+    // Get cart from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Update the total price
-    totalPrice -= price;
-    document.querySelector(".total").innerHTML = "Total: $" + totalPrice.toFixed(2);
+    // Calculate total quantity of items in the cart
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
-    // Remove the cart item row
-    row.remove();
-
-    // Hide the cart if no items are left
-    if (num === 0) {
-        document.querySelector("#cart-items").style.display = "none";
-    }
+    // Update the cartNum element
+    const cartNumElement = document.getElementById('cartNum');
+    cartNumElement.textContent = totalItems; // Display the total number of items
 }
 
-// Update total price when quantity changes
-function updateTotal() {
-    let rows = document.querySelectorAll("#cart-items tr");
-    totalPrice = 0;
+// Function to show a custom popup message (optional)
+function showPopup(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup-message';
+    popup.textContent = message;
 
-    rows.forEach(function (row) {
-        let quantity = row.querySelector(".quantity").value;
-        let price = parseFloat(row.querySelector(".item-total").innerText.replace('$', ''));
-        let itemTotal = price * quantity;
+    // Style the popup
+    // popup.style.position = 'fixed';
+    // popup.style.top = '50%';
+    // popup.style.left = '50%';
+    // popup.style.transform = 'translate(-50%, -50%)';
+    // popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    // popup.style.color = 'white';
+    // popup.style.padding = '10px 20px';
+    // popup.style.borderRadius = '5px';
+    // popup.style.fontSize = '18px';
 
-        row.querySelector(".item-total").innerText = `$${itemTotal.toFixed(2)}`;
-        totalPrice += itemTotal;
-    });
+    // Append popup to body
+    document.body.appendChild(popup);
 
-    document.querySelector(".total").innerHTML = "Total: $" + totalPrice.toFixed(2);
+    // Remove the popup after 3 seconds
+    setTimeout(() => {
+        popup.remove();
+    }, 3000);
 }
 
-
-
-
-
+// Initial update of the cart count when the page loads
+updateCartCount();
 
 
 
@@ -189,7 +129,7 @@ function validateForm() {
 
   // If all validations pass
   if (isValid) {
-    alert("Thank you for contacting us! Redirecting to the index page...");
+    alert("Thank you for contacting us! Your message has been successfully submitted.");
     window.location.href = "index.html";
   }
 

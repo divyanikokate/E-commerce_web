@@ -1,6 +1,5 @@
 
-
-
+// ADD TO CART PRODUCTS
 const addToCartButtons = document.querySelectorAll('.add_to_cart');
 
 addToCartButtons.forEach(button => {
@@ -9,7 +8,8 @@ addToCartButtons.forEach(button => {
         const productId = productElement.dataset.productId;
         const productName = productElement.dataset.productName;
         const productPrice = parseFloat(productElement.dataset.productPrice);
-        const productImage = productElement.dataset.productImage;
+        // const productImage = productElement.dataset.productImage;
+        const productImage = productElement.dataset.productImage || '/assets/images/default.jpeg'; // Use default image if not provided
 
         const product = {
             id: productId,
@@ -37,7 +37,6 @@ addToCartButtons.forEach(button => {
 
         // Display the popup message
         alert('Product added to the cart');
-        // showPopup('Product added to the cart');
 
         // Update the cart count dynamically
         updateCartCount();
@@ -55,32 +54,6 @@ function updateCartCount() {
     // Update the cartNum element
     const cartNumElement = document.getElementById('cartNum');
     cartNumElement.textContent = totalItems; // Display the total number of items
-}
-
-// Function to show a custom popup message (optional)
-function showPopup(message) {
-    const popup = document.createElement('div');
-    popup.className = 'popup-message';
-    popup.textContent = message;
-
-    // Style the popup
-    // popup.style.position = 'fixed';
-    // popup.style.top = '50%';
-    // popup.style.left = '50%';
-    // popup.style.transform = 'translate(-50%, -50%)';
-    // popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    // popup.style.color = 'white';
-    // popup.style.padding = '10px 20px';
-    // popup.style.borderRadius = '5px';
-    // popup.style.fontSize = '18px';
-
-    // Append popup to body
-    document.body.appendChild(popup);
-
-    // Remove the popup after 3 seconds
-    setTimeout(() => {
-        popup.remove();
-    }, 3000);
 }
 
 // Initial update of the cart count when the page loads

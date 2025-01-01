@@ -745,6 +745,12 @@ background-color: var(--secondary-color);
     nav h1 {
         font-size: 15px;
     }
+    .side-nav{
+        width: 200px;
+    }
+    .side-nav ul li a{
+        font-size: 15px;
+    }
 
     .searchBar {
         display: none;
@@ -779,6 +785,8 @@ background-color: var(--secondary-color);
         color: #000;
         font-size: 10px;   
     }
+    .gallery img {
+        width: 350px;}
 }
 
 @media (max-width: 480px) {
@@ -818,4 +826,6 @@ background-color: var(--secondary-color);
         max-width: 300px;
         padding: 5px;
     }
+    .gallery img {
+        width: 300px;}
 }

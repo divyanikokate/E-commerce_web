@@ -9,7 +9,7 @@ addToCartButtons.forEach(button => {
         const productName = productElement.dataset.productName;
         const productPrice = parseFloat(productElement.dataset.productPrice);
         // const productImage = productElement.dataset.productImage;
-        const productImage = productElement.dataset.productImage || '/assets/images/default.jpeg'; // Use default image if not provided
+        const productImage = productElement.dataset.productImage || 'assets/images/default.jpeg'; // Use default image if not provided
 
         const product = {
             id: productId,

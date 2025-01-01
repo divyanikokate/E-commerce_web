@@ -18,7 +18,7 @@
     <!-- container start -->
     <div class="container">
         <!-- nav start -->
-        <nav>
+        <!-- <nav>
             <div class="logo">
                 <h1>Wardrobe <span> Wonders</span></h1>
             </div>
@@ -36,7 +36,48 @@
                 <p id="cartNum"></p>
                 <a href="add_to_cart.html" title="Go to Cart"> <img src="assets/images/cart-icon.png" alt=""></a>
             </div>
+        </nav> -->
+        <nav>
+            <div class="logo">
+                <h1>Wardrobe <span>Wonders</span></h1>
+            </div>
+            
+            <!-- Hamburger Menu Button (appears on mobile) -->
+            <div class="hamburger-menu">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            
+            <!-- Regular Menu for Larger Screens -->
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#shop">SHOP</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            
+            <!-- Search Bar -->
+            <div class="searchBar">
+                <input type="text" placeholder="search Here.">
+                <img src="assets/images/search-icon.png" alt="">
+            </div>
+            
+            <!-- Cart -->
+            <div class="cart">
+                <p id="cartNum"></p>
+                <a href="add_to_cart.html" title="Go to Cart"> <img src="assets/images/cart-icon.png" alt=""></a>
+            </div>
         </nav>
+        
+        <!-- Side Navigation (Mobile Menu) -->
+        <div class="side-nav" id="sideNav">
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#shop">SHOP</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </div>
+        
         <div class="main">
             <div class="mainText">
                 <h1>On Sale Upto <br> 50% OFF</h1>
@@ -289,6 +330,7 @@
                 <img src="assets/images/gallery/g25.jpg" alt="">
                 <img src="assets/images/gallery/g26.avif" alt="">
                 <img src="assets/images/gallery/g27.jpg" alt="">
+                <img src="assets/images/gallery/g28.jpg" alt="">
             </div>
         </div>
         <!-- gallery  ends -->
@@ -321,7 +363,7 @@
                 </div>
                 <div class="column">
                     <label for="the-message">Message</label>
-                    <textarea name="message" id="the-message"></textarea>
+                    <textarea name="message" id="the-message" column="2"></textarea>
 
 
                     <label>

@@ -142,3 +142,14 @@ function validateForm() {
         }
     });
 
+    // toggle menu
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const sideNav = document.getElementById('sideNav');
+    
+    hamburgerMenu.addEventListener('click', () => {
+        if (sideNav.style.left === '-250px') {
+            sideNav.style.left = '0';
+        } else {
+            sideNav.style.left = '-250px';
+        }
+    });

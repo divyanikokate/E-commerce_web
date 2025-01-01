@@ -26,6 +26,7 @@ p {
     text-align: center;
     margin: 25px 0px;
 }
+
 /* Navigation Bar */
 nav {
     display: flex;
@@ -82,6 +83,54 @@ ul li a:hover {
 .searchBar img {
     margin-left: -35px;
     width: 30px;
+}
+
+/* Hamburger Menu Button */
+.hamburger-menu {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Side Navigation */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: #bd93fd63;
+    color: #fff;
+    overflow: hidden;
+    transition: 0.3s ease;
+    z-index: 999;
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+
+.side-nav ul li {
+    margin: 20px 0;
+}
+
+.side-nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    transition: 0.3s ease;
+}
+
+.side-nav ul li a:hover {
+    color: #f1c40f;
 }
 
 /* Cart Section */
@@ -253,7 +302,8 @@ ul li a:hover {
 /* contact */
 #contact {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: stretch;
     margin: 25px;
 }
 
@@ -264,7 +314,9 @@ form label {
 
 form {
     border: 1px solid var(--border-color);
-    padding: 15px 0px 15px 15px;
+    padding: 15px;
+    width: 500px;
+    margin-right: 55px;
 }
 
 /* single-line text, checkbox, and button */
@@ -273,16 +325,17 @@ form select,
 form textarea {
     display: block;
     width: 100%;
-    padding: 0.3em;
-    font-size: 20px;
+    font-size: 25px;
     background-color: var(--background-light);
     border: solid 1px var(--border-color);
     resize: vertical;
 }
+
 form input[type=checkbox] {
     display: inline;
     width: auto;
 }
+
 form input[type=submit] {
     background: var(--secondary-color);
     margin-top: 1em;
@@ -290,7 +343,10 @@ form input[type=submit] {
     border: none;
     border-radius: 8px;
     transition: all 0.3s ease-out;
+    font-size: 20px;
+    padding: 5px;
 }
+
 form textarea {
     min-height: 180px;
 }
@@ -298,6 +354,7 @@ form textarea {
 form select {
     color: indigo;
     font-size: 15px;
+    padding: 5px;
 }
 
 /* hover and focus states */
@@ -368,31 +425,14 @@ input[type=submit]:focus {
     font-size: 18px;
 }
 
-/* Responsive Design */
-@media screen and (min-width:600px) {
-
-    /*  make the form 2 columns */
-    form:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-
-    .column {
-        width: 80%;
-        padding: 1em;
-        float: left;
-    }
-}
-
-
 /* Add to cart page css */
 
-.cart_body{
+.cart_body {
     background-color: #e8d9fa;
 }
+
 .cart_container {
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
@@ -410,7 +450,7 @@ input[type=submit]:focus {
 }
 
 .cart-header h1 {
-    font-size: 1.8rem;
+    font-size: 25px;
     color: var(--primary-color);
 }
 
@@ -434,7 +474,7 @@ input[type=submit]:focus {
     background-color: var(--background-light);
 }
 
-.cart-table th, 
+.cart-table th,
 .cart-table td {
     padding: 12px;
     text-align: center;
@@ -458,6 +498,9 @@ input[type=submit]:focus {
     max-width: 60px;
     height: auto;
     border-radius: 4px;
+}
+.cart-table .quantity {
+    text-align: center;
 }
 
 /* Actions and buttons */
@@ -489,12 +532,24 @@ input[type=submit]:focus {
 .cart-actions button:hover {
     background-color: var(--highlight-color);
 }
+.remove{
+    background-color: var(--highlight-color);
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    color: #000;  
+}
+.remove:hover{
+color: var(--text-color);
+background-color: var(--secondary-color);
+}
 
 /* Empty cart message */
 .empty-cart {
     text-align: center;
     padding: 20px;
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
 }
 
 .empty-cart h2 {
@@ -508,25 +563,259 @@ input[type=submit]:focus {
     color: var(--secondary-color);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .cart-header {
-        flex-direction: column;
-        text-align: center;
+
+
+/* Responsive Design */
+@media screen and (min-width:600px) {
+
+    /*  make the form 2 columns */
+    form:after {
+        content: '';
+        display: block;
+        clear: both;
     }
 
-    .cart-table th, 
-    .cart-table td {
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .searchBar input {
+        font-size: 15px;
+    }
+
+    .cart img {
+        width: 45px;
+        margin: 15px 0;
+    }
+
+    /* .main {
+        margin: 50px 0;
+    } */
+
+    .main img {
+        width: 100%;
+    }
+
+    .shops .card {
+        margin: 22px;
+    }
+
+    #contact form {
+        margin-right: 0px;
+    }
+
+    #contact img {
+        width: 565px
+    }
+
+    #contact .column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    form textarea {
+        min-height: 70px;
+    }
+
+
+    #contact .contact-banner {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .cart-table th {
+        font-size: 10px;
+    }
+
+    /* add to cart */
+
+    .cart_container {
+        max-width: 945px;
+    }
+
+    .cart-header {
+        margin-bottom: 10px;
+    }
+}
+
+/* Show Hamburger on Mobile */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+        padding: 10px 0;
+        color: var(--text-color);
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    .side-nav ul {
+        list-style: none;
+        padding: 80px 20px;
+        margin: 0;
+    }
+
+    .side-nav ul li a:hover {
+        border-bottom: 1px solid var(--secondary-color);
+        background-color: #ae86bf;
+        color: var(--text-color);
+        padding: 5px 10px;
+    }
+
+    .main {
+        display: block;
+    }
+
+    .main img {
+        margin-top: 44px;
+    }
+
+    #contact {
+        display: block;
+    }
+
+    #contact form {
+        width: 96%;
+    }
+
+    #contact img {
+        width: 100%;
+    }
+
+    .cart_container {
+        max-width: 700px;
+    }
+
+    .cart-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-header h1 {
+        font-size: 20px;
+    }
+
+    .cart-header a {
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    .cart-table {
         font-size: 0.8rem;
+    }
+
+    .cart-table th,
+    .cart-table td {
         padding: 8px;
+    }
+
+    .cart-table img {
+        max-width: 40px;
     }
 
     .cart-actions {
         flex-direction: column;
+        align-items: flex-start;
         gap: 10px;
     }
 
     .cart-actions .total {
+        font-size: 1rem;
+    }
+
+    .cart-actions button {
+        width: 100%;
+    }
+
+    .empty-cart h2 {
+        font-size: 1.2rem;
+    }
+
+    .empty-cart p {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+    nav h1 {
+        font-size: 15px;
+    }
+
+    .searchBar {
+        display: none;
+    }
+    .cart_container {
+        max-width: 365px;
+    }
+
+    .cart-table {
+        width: 50%;
+    }
+
+    .cart-table .quantity {
+        width: 20px;
         text-align: center;
+        font-size: 10px;
+    }
+
+    .cart-actions button {
+        width: 90%;
+        padding: 5px;
+        font-size: 10px;
+    }
+    .cart-table th, .cart-table td {
+        font-size: 10px;
+    }
+    .remove{
+        background-color: var(--highlight-color);
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        color: #000;
+        font-size: 10px;   
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-header h1 {
+        font-size: 15px;
+    }
+
+    .cart-header a {
+        font-size: 0.8rem;
+    }
+
+    .cart-table {
+        font-size: 0.7rem;
+    }
+
+    .cart-table img {
+        max-width: 30px;
+    }
+
+    .cart-actions .total {
+        font-size: 0.9rem;
+    }
+
+    .empty-cart h2 {
+        font-size: 1rem;
+    }
+
+    .empty-cart p {
+        font-size: 0.8rem;
+    }
+}
+@media screen and (max-width:320px){
+    .cart-table th, .cart-table td{
+        font-size: 7px;
+    }
+    .cart_container{
+        max-width: 300px;
+        padding: 5px;
     }
 }
